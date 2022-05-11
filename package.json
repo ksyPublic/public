@@ -1,0 +1,32 @@
+{
+    "name": "my-project",
+    "version": "1.0.0",
+    "description": "",
+    "source": "src/index.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "targets": {
+        "default": {
+            "distDir": "./src/assets"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "parcel src/index.html",
+        "build": "parcel build src/index.html",
+        "watch": "parcel watch src/index.html",
+        "build:docs": "parcel build src/index.html --dist-dir output"
+    },
+    "devDependencies": {
+        "@parcel/transformer-sass": "^2.5.0",
+        "@swc/cli": "^0.1.57",
+        "@swc/core": "^1.2.182",
+        "parcel": "latest"
+    },
+    "env": {
+        "mode": "entry",
+        "coreJs": 3
+    },
+    "browserslist": "> 0.5%, last 2 versions, not dead"
+}
