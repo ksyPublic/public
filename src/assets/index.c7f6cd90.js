@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"kHTpI":[function(require,module,exports) {
+})({"3S9es":[function(require,module,exports) {
 "use strict";
 var HMR_HOST = null;
-var HMR_PORT = 55690;
+var HMR_PORT = 1234;
 var HMR_SECURE = false;
-var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "19b5fafd6056902e";
+var HMR_ENV_HASH = "916932b22e4085ab";
+module.bundle.HMR_BUNDLE_ID = "a3690c58c7f6cd90";
 function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -525,16 +525,45 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"2ASYY":[function(require,module,exports) {
-(function(window) {
-    const tabs = ()=>{
-    //
+},{}],"aGFbi":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _tabsJs = require("./js/components/tabs.js");
+var _tabsJsDefault = parcelHelpers.interopDefault(_tabsJs);
+exports.default = _tabsJsDefault.default;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"5oERU","./js/components/tabs.js":"bQZnw"}],"5oERU":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
     };
-    document.addEventListener("DOMContentLoaded", ()=>{
-        tabs();
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
     });
-})(window);
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function get() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
 
-},{}]},["kHTpI","2ASYY"], "2ASYY", "parcelRequire716c")
+},{}],"bQZnw":[function(require,module,exports) {
 
-//# sourceMappingURL=index.6056902e.js.map
+},{}]},["3S9es","aGFbi"], "aGFbi", "parcelRequire716c")
+
+//# sourceMappingURL=index.c7f6cd90.js.map

@@ -1,9 +1,12 @@
-const { config } = require("@swc/core/spack");
+const { config } = require('@swc/core/spack');
 
 module.exports = config({
-    output: {
-        path: __dirname + "/src/js/common.js",
-        // Name is optional.
-        name: "index.js",
+    entry: {
+        web: __dirname + '/src/web.js',
+        android: __dirname + '/src/android.js'
     },
+    output: {
+        path: __dirname + '/lib'
+    },
+    module: {}
 });
