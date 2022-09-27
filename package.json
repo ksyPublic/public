@@ -1,29 +1,56 @@
 {
-    "name": "seo",
-    "version": "1.0.0",
-    "description": "",
-    "source": "src/js/seo.ui.js",
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "targets": {
-        "default": {
-            "distDir": "./src/assets"
-        }
+  "name": "seo",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "sources": "index.js",
+  "license": "ISC",
+  "targets": {
+    "desktop:css": {
+      "source": "src/desktop/scss/main.scss",
+      "distDir": "./production/desktop/css"
     },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "parcel src/html/index.html",
-        "build": "parcel build src/html/index.html",
-        "watch": "parcel watch src/html/index.html",
-        "build:docs": "parcel build src/html/index.html --dist-dir output"
+    "desktop:js": {
+      "source": "src/desktop/js/seo.ui.js",
+      "distDir": "./production/desktop/js"
     },
-    "devDependencies": {
-        "parcel": "^2.7.0"
+    "desktop:all": {
+      "source": [
+        "src/desktop/js/seo.ui.js",
+        "src/desktop/scss/main.scss",
+        "src/*.html"
+      ],
+      "distDir": "./production/desktop"
     },
-    "env": {
-        "mode": "entry",
-        "coreJs": 3
-    },
-    "browserslist": "> 0.5%, last 2 versions, not dead"
+    "mobile": {},
+    "admin": {}
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./build.js",
+    "serve": "cross-env NODE_ENV=development parcel watch src serve",
+    "dev": "parcel watch src",
+    "build:p:css": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:css --no-source-maps --dist-dir output/desktop --no-optimize",
+    "build:p:js": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:js --no-source-maps --dist-dir output/desktop",
+    "build:m:css": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target css --no-source-maps --dist-dir output/mobile",
+    "build:m:js": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target js --no-source-maps --dist-dir output/mobile",
+    "build:p": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:all --no-source-maps --dist-dir output/desktop --no-optimize",
+    "build:m": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target all --no-source-maps --dist-dir output/mobile",
+    "build": "cross-env BUILD_TYPE=all NODE_ENV=production parcel build 'src/dektop/html/*.html' --no-source-maps --dist-dir output"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.7.0",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.3.3",
+    "chalk": "^5.0.1",
+    "cli-select": "^1.1.2",
+    "parcel": "^2.7.0",
+    "swc-loader": "^0.2.3"
+  },
+  "type": "module",
+  "env": {
+    "mode": "entry",
+    "coreJs": 3
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead"
 }
