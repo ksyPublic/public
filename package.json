@@ -22,7 +22,7 @@
         "@parcel/transformer-sass": "^2.5.0",
         "@swc/cli": "^0.1.57",
         "@swc/core": "^1.2.182",
-        "parcel": "latest"
+        "parcel": "^2.7.0"
     },
     "env": {
         "mode": "entry",
