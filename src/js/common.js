@@ -1,8 +1,10 @@
-(function (window) {
-    const tabs = () => {
-        //
-    };
-    document.addEventListener("DOMContentLoaded", () => {
-        tabs();
-    });
-})(window);
+const func = {};
+
+const initilize = {};
+
+const common = {
+  func,
+  initilize,
+};
+
+export default common;
