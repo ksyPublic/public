@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\inpix\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add --json @company/parcel-bundler -D -W
+  C:\Program Files\nodejs\node.exe C:\Users\inpix\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @company/parcel-resolver -D
 
 PATH: 
-  C:\Users\inpix\AppData\Local\Temp\yarn--1664264129117-0.12641683714495566;C:\Users\inpix\Desktop\public\node_modules\.bin;C:\Users\inpix\AppData\Local\Yarn\Data\link\node_modules\.bin;C:\Users\inpix\AppData\Local\Yarn\bin;C:\Program Files\libexec\lib\node_modules\npm\bin\node-gyp-bin;C:\Program Files\lib\node_modules\npm\bin\node-gyp-bin;C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\inpix\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\inpix\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Users\inpix\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip;C:\Users\inpix\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\inpix\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Users\inpix\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\inpix\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Users\inpix\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip;C:\Users\inpix\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\inpix\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.22.19
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@company%2fparcel-bundler: Not found
+  Error: https://registry.yarnpkg.com/@company%2fparcel-resolver: Not found
       at Request.params.callback [as _callback] (C:\Users\inpix\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
       at Request.self.callback (C:\Users\inpix\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:527:28)
@@ -31,8 +31,8 @@ npm manifest:
     "name": "seo",
     "version": "1.0.0",
     "description": "",
-    "source": "index.js",
     "keywords": [],
+    "sources": "seo.config.js",
     "license": "ISC",
     "targets": {
       "desktop:css": {
@@ -45,32 +45,44 @@ npm manifest:
       },
       "desktop:all": {
         "source": [
-          "src/desktop/js/seo.ui.js",
-          "src/desktop/scss/main.scss",
-          "src/desktop/html/index.html"
+          "src/desktop/html/**/*.html"
         ],
-        "distDir": "./production"
+        "distDir": "./production/desktop"
       },
-      "mobile": {},
-      "admin": {}
+      "mobile:css": {
+        "source": "src/mobile/scss/main.scss",
+        "distDir": "./production/mobile/css"
+      },
+      "mobile:js": {
+        "source": "src/mobile/js/seo.ui.js",
+        "distDir": "./production/mobile/js"
+      },
+      "mobile:all": {
+        "source": "src/mobile",
+        "distDir": "./production/mobile"
+      },
+      "admin": {},
+      "prod": {}
     },
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "start": "node ./build.js",
-      "serve": "parcel watch src serve --open",
-      "dev": "parcel watch src",
-      "build:p:css": "parcel build --target desktop:css --no-source-maps --dist-dir output/desktop",
-      "build:p:js": "parcel build --target desktop --no-source-maps --dist-dir output/desktop",
-      "build:m:css": "parcel build --target css --no-source-maps --dist-dir output/mobile",
-      "build:m:js": "parcel build --target js --no-source-maps --dist-dir output/mobile",
-      "build:p": "parcel build --target desktop --no-source-maps --dist-dir output/desktop",
-      "build:m": "parcel build --target all --no-source-maps --dist-dir output/mobile",
-      "build": "parcel build --target all --no-source-maps --dist-dir output"
+      "dev:p": "rm -rf dist && parcel src/desktop/html/**/*.html --open",
+      "dev:m": "rm -rf dist && parcel src/mobile/html/**/*.html --open",
+      "dev:a": "rm -rf dist && parcel src/admin/html/**/*.html --open",
+      "build:p:css": "parcel build --target desktop:css --no-source-maps --dist-dir output/desktop --no-optimize",
+      "build:p:js": "parcel build --target desktop:js --no-source-maps --dist-dir output/desktop",
+      "build:m:css": "parcel build --target mobile:css --no-source-maps --dist-dir output/mobile",
+      "build:m:js": "parcel build --target mobile:js --no-source-maps --dist-dir output/mobile",
+      "build:p": "parcel build --target desktop:all --no-source-maps --dist-dir output/desktop --no-optimize",
+      "build:m": "parcel build --target mobile:all --no-source-maps --dist-dir output/mobile",
+      "build": "parcel build --target prod --no-source-maps --dist-dir output"
     },
     "devDependencies": {
       "@parcel/transformer-sass": "^2.7.0",
       "chalk": "^5.0.1",
       "cli-select": "^1.1.2",
+      "cross-env": "^7.0.3",
       "parcel": "^2.7.0"
     },
     "type": "module",
@@ -78,7 +90,7 @@ npm manifest:
       "mode": "entry",
       "coreJs": 3
     },
-    "browserslist": "> 0.5%, last 2 versions, not dead"
+    "browserslist": "> 0.25%, not dead"
   }
 
 yarn manifest: 
@@ -119,7 +131,7 @@ Lockfile:
       "@jridgewell/sourcemap-codec" "^1.4.10"
       "@jridgewell/trace-mapping" "^0.3.9"
   
-  "@jridgewell/resolve-uri@^3.0.3":
+  "@jridgewell/resolve-uri@3.1.0":
     version "3.1.0"
     resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.0.tgz#2203b118c157721addfe69d47b70465463066d78"
     integrity sha512-F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==
@@ -137,18 +149,18 @@ Lockfile:
       "@jridgewell/gen-mapping" "^0.3.0"
       "@jridgewell/trace-mapping" "^0.3.9"
   
-  "@jridgewell/sourcemap-codec@^1.4.10":
+  "@jridgewell/sourcemap-codec@1.4.14", "@jridgewell/sourcemap-codec@^1.4.10":
     version "1.4.14"
     resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.14.tgz#add4c98d341472a289190b424efbdb096991bb24"
     integrity sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==
   
   "@jridgewell/trace-mapping@^0.3.9":
-    version "0.3.15"
-    resolved "https://registry.yarnpkg.com/@jridgewell/trace-mapping/-/trace-mapping-0.3.15.tgz#aba35c48a38d3fd84b37e66c9c0423f9744f9774"
-    integrity sha512-oWZNOULl+UbhsgB51uuZzglikfIKSUBO/M9W2OfEjn7cmqoAiCgmv9lyACTUacZwBz0ITnJ2NqjU8Tx0DHL88g==
+    version "0.3.16"
+    resolved "https://registry.yarnpkg.com/@jridgewell/trace-mapping/-/trace-mapping-0.3.16.tgz#a7982f16c18cae02be36274365433e5b49d7b23f"
+    integrity sha512-LCQ+NeThyJ4k1W2d+vIKdxuSt9R3pQSZ4P92m7EakaYuXcVWbHuT5bjNcqLd4Rdgi6xYWYDvBJZJLZSLanjDcA==
     dependencies:
-      "@jridgewell/resolve-uri" "^3.0.3"
-      "@jridgewell/sourcemap-codec" "^1.4.10"
+      "@jridgewell/resolve-uri" "3.1.0"
+      "@jridgewell/sourcemap-codec" "1.4.14"
   
   "@lezer/common@^0.15.0", "@lezer/common@^0.15.7":
     version "0.15.12"
@@ -807,9 +819,9 @@ Lockfile:
       nullthrows "^1.1.1"
   
   "@swc/helpers@^0.4.2":
-    version "0.4.11"
-    resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.4.11.tgz#db23a376761b3d31c26502122f349a21b592c8de"
-    integrity sha512-rEUrBSGIoSFuYxwBYtlUFMlE2CwGhmW+w9355/5oduSw8e5h2+Tj4UrAGNNgP9915++wj5vkQo0UuOBqOAq4nw==
+    version "0.4.12"
+    resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.4.12.tgz#203243e78cff3c87c081c97ae548ab33e2503573"
+    integrity sha512-R6RmwS9Dld5lNvwKlPn62+piU+WDG1sMfsnfJioXCciyko/gZ0DQ4Mqglhq1iGU1nQ/RcGkAwfMH+elMSkJH3Q==
     dependencies:
       tslib "^2.4.0"
   
@@ -824,9 +836,9 @@ Lockfile:
     integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
   
   abortcontroller-polyfill@^1.1.9:
-    version "1.7.3"
-    resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.7.3.tgz#1b5b487bd6436b5b764fd52a612509702c3144b5"
-    integrity sha512-zetDJxd89y3X99Kvo4qFx8GKlt6GsvN3UcRZHwU6iFA/0KiOmhkTVhe8oRoTBiTVPZu09x3vCra47+w8Yz1+2Q==
+    version "1.7.5"
+    resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.7.5.tgz#6738495f4e901fbb57b6c0611d0c75f76c485bed"
+    integrity sha512-JMJ5soJWP18htbbxJjG7bG6yuI6pRhgJ0scHHTfkUjf6wjP912xZWvM+A4sJK3gqd9E8fcPbDnOefbA9Th/FIQ==
   
   acorn@^8.5.0:
     version "8.8.0"
@@ -905,9 +917,9 @@ Lockfile:
     integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
   
   caniuse-lite@^1.0.30001400:
-    version "1.0.30001412"
-    resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001412.tgz#30f67d55a865da43e0aeec003f073ea8764d5d7c"
-    integrity sha512-+TeEIee1gS5bYOiuf+PS/kp2mrXic37Hl66VY6EAfxasIk5fELTktK2oOezYed12H8w7jt3s512PpulQidPjwA==
+    version "1.0.30001418"
+    resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001418.tgz#5f459215192a024c99e3e3a53aac310fc7cf24e6"
+    integrity sha512-oIs7+JL3K9JRQ3jPZjlH6qyYDp+nBTCais7hjh0s+fuBwufc7uZ7hPYMXrDOJhV360KGMTcczMRObk0/iMqZRg==
   
   chalk@^2.0.0:
     version "2.4.2"
@@ -927,9 +939,9 @@ Lockfile:
       supports-color "^7.1.0"
   
   chalk@^5.0.1:
-    version "5.0.1"
-    resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.0.1.tgz#ca57d71e82bb534a296df63bbacc4a1c22b2a4b6"
-    integrity sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==
+    version "5.1.0"
+    resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.1.0.tgz#c4b4a62bfb6df0eeeb5dbc52e6a9ecaff14b9976"
+    integrity sha512-56zD4khRTBoIyzUYAFgDDaPhUMN/fC/rySe6aZGqbj/VWiU2eI3l6ZLOtYGFZAV5v02mwPjtpzlrOveJiz5eZQ==
   
   "chokidar@>=3.0.0 <4.0.0":
     version "3.5.3"
@@ -1008,6 +1020,22 @@ Lockfile:
       path-type "^4.0.0"
       yaml "^1.10.0"
   
+  cross-env@^7.0.3:
+    version "7.0.3"
+    resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
+    integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
+    dependencies:
+      cross-spawn "^7.0.1"
+  
+  cross-spawn@^7.0.1:
+    version "7.0.3"
+    resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
+    integrity sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
+    dependencies:
+      path-key "^3.1.0"
+      shebang-command "^2.0.0"
+      which "^2.0.1"
+  
   css-select@^4.1.3:
     version "4.3.0"
     resolved "https://registry.yarnpkg.com/css-select/-/css-select-4.3.0.tgz#db7129b2846662fd8628cfc496abb2b59e41529b"
@@ -1085,9 +1113,9 @@ Lockfile:
     integrity sha512-M3NhsLbV1i6HuGzBUH8vXrtxOk+tWmzWKDMbAVSUp3Zsjm7ywFeuwrUXhmhQyRK1q5B5GGy7hcXPbj3bnfZg2g==
   
   electron-to-chromium@^1.4.251:
-    version "1.4.264"
-    resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.264.tgz#2f68a062c38b7a04bf57f3e6954b868672fbdcd3"
-    integrity sha512-AZ6ZRkucHOQT8wke50MktxtmcWZr67kE17X/nAXFf62NIdMdgY6xfsaJD5Szoy84lnkuPWH+4tTNE3s2+bPCiw==
+    version "1.4.276"
+    resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.276.tgz#17837b19dafcc43aba885c4689358b298c19b520"
+    integrity sha512-EpuHPqu8YhonqLBXHoU6hDJCD98FCe6KDoet3/gY1qsQ6usjJoHqBH2YIVs8FXaAtHwVL8Uqa/fsYao/vq9VWQ==
   
   entities@^2.0.0:
     version "2.2.0"
@@ -1222,6 +1250,11 @@ Lockfile:
     version "7.0.0"
     resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
     integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
+  
+  isexe@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
+    integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
   
   js-tokens@^4.0.0:
     version "4.0.0"
@@ -1386,9 +1419,9 @@ Lockfile:
     integrity sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==
   
   ordered-binary@^1.2.4:
-    version "1.3.0"
-    resolved "https://registry.yarnpkg.com/ordered-binary/-/ordered-binary-1.3.0.tgz#a116d64c923278216e335602d279750b2ebd746e"
-    integrity sha512-knIeYepTI6BDAzGxqFEDGtI/iGqs57H32CInAIxEvAHG46vk1Di0CEpyc1A7iY39B1mfik3g3KLYwOTNnnMHLA==
+    version "1.4.0"
+    resolved "https://registry.yarnpkg.com/ordered-binary/-/ordered-binary-1.4.0.tgz#6bb53d44925f3b8afc33d1eed0fa15693b211389"
+    integrity sha512-EHQ/jk4/a9hLupIKxTfUsQRej1Yd/0QLQs3vGvIqg5ZtCYSzNhkzHoZc7Zf4e4kUlDaC3Uw8Q/1opOLNN2OKRQ==
   
   parcel@^2.7.0:
     version "2.7.0"
@@ -1426,6 +1459,11 @@ Lockfile:
       error-ex "^1.3.1"
       json-parse-even-better-errors "^2.3.0"
       lines-and-columns "^1.1.6"
+  
+  path-key@^3.1.0:
+    version "3.1.1"
+    resolved "https://registry.yarnpkg.com/path-key/-/path-key-3.1.1.tgz#581f6ade658cbba65a0d3380de7753295054f375"
+    integrity sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
   
   path-type@^4.0.0:
     version "4.0.0"
@@ -1522,6 +1560,18 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
     integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
   
+  shebang-command@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-2.0.0.tgz#ccd0af4f8835fbdc265b82461aaf0c36663f34ea"
+    integrity sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==
+    dependencies:
+      shebang-regex "^3.0.0"
+  
+  shebang-regex@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
+    integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
+  
   "source-map-js@>=0.6.2 <2.0.0":
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
@@ -1578,9 +1628,9 @@ Lockfile:
     integrity sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==
   
   terser@^5.2.0:
-    version "5.15.0"
-    resolved "https://registry.yarnpkg.com/terser/-/terser-5.15.0.tgz#e16967894eeba6e1091509ec83f0c60e179f2425"
-    integrity sha512-L1BJiXVmheAQQy+as0oF3Pwtlo4s3Wi1X2zNZ2NxOB4wx9bdS9Vk67XQENLFdLYGCK/Z2di53mTj/hBafR+dTA==
+    version "5.15.1"
+    resolved "https://registry.yarnpkg.com/terser/-/terser-5.15.1.tgz#8561af6e0fd6d839669c73b92bdd5777d870ed6c"
+    integrity sha512-K1faMUvpm/FBxjBXud0LWVAGxmvoPbZbfTCYbSgaaYQaIXI3/TdI7a7ZGA73Zrou6Q8Zmz3oeUTsp/dj+ag2Xw==
     dependencies:
       "@jridgewell/source-map" "^0.3.2"
       acorn "^8.5.0"
@@ -1610,9 +1660,9 @@ Lockfile:
     integrity sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==
   
   update-browserslist-db@^1.0.9:
-    version "1.0.9"
-    resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.0.9.tgz#2924d3927367a38d5c555413a7ce138fc95fcb18"
-    integrity sha512-/xsqn21EGVdXI3EXSum1Yckj3ZVZugqyOZQ/CxYPBD/R+ko9NSUScf8tFF4dOKY+2pvSSJA/S+5B8s4Zr4kyvg==
+    version "1.0.10"
+    resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.0.10.tgz#0f54b876545726f17d00cd9a2561e6dade943ff3"
+    integrity sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==
     dependencies:
       escalade "^3.1.1"
       picocolors "^1.0.0"
@@ -1631,6 +1681,13 @@ Lockfile:
     version "1.2.2"
     resolved "https://registry.yarnpkg.com/weak-lru-cache/-/weak-lru-cache-1.2.2.tgz#fdbb6741f36bae9540d12f480ce8254060dccd19"
     integrity sha512-DEAoo25RfSYMuTGc9vPJzZcZullwIqRDSI9LOy+fkCJPi6hykCnfKaXTuPBDuXAUcqHXyOgFtHNp/kB2FjYHbw==
+  
+  which@^2.0.1:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/which/-/which-2.0.2.tgz#7c6a8dd0a636a0327e10b59c9286eee93f3f51b1"
+    integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
+    dependencies:
+      isexe "^2.0.0"
   
   xxhash-wasm@^0.4.2:
     version "0.4.2"
