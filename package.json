@@ -3,54 +3,50 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "sources": "index.js",
   "license": "ISC",
-  "targets": {
-    "desktop:css": {
-      "source": "src/desktop/scss/main.scss",
-      "distDir": "./production/desktop/css"
-    },
-    "desktop:js": {
-      "source": "src/desktop/js/seo.ui.js",
-      "distDir": "./production/desktop/js"
-    },
-    "desktop:all": {
-      "source": [
-        "src/desktop/js/seo.ui.js",
-        "src/desktop/scss/main.scss",
-        "src/*.html"
-      ],
-      "distDir": "./production/desktop"
-    },
-    "mobile": {},
-    "admin": {}
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./build.js",
-    "serve": "cross-env NODE_ENV=development parcel watch src serve",
-    "dev": "parcel watch src",
-    "build:p:css": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:css --no-source-maps --dist-dir output/desktop --no-optimize",
-    "build:p:js": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:js --no-source-maps --dist-dir output/desktop",
-    "build:m:css": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target css --no-source-maps --dist-dir output/mobile",
-    "build:m:js": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target js --no-source-maps --dist-dir output/mobile",
-    "build:p": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:all --no-source-maps --dist-dir output/desktop --no-optimize",
-    "build:m": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target all --no-source-maps --dist-dir output/mobile",
-    "build": "cross-env BUILD_TYPE=all NODE_ENV=production parcel build 'src/dektop/html/*.html' --no-source-maps --dist-dir output"
+    "dev": "parcel dev",
+    "serve": "parcel watch cli.js",
+    "build:p": "parcel build cli.js dev",
+    "build:css": "parcel build cli.js"
   },
   "devDependencies": {
+    "@parcel/config-default": "^2.7.0",
+    "@parcel/core": "^2.7.0",
     "@parcel/transformer-sass": "^2.7.0",
-    "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.3.3",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
     "chalk": "^5.0.1",
     "cli-select": "^1.1.2",
+    "crypto-browserify": "^3.12.0",
+    "events": "^3.3.0",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
     "parcel": "^2.7.0",
-    "swc-loader": "^0.2.3"
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "querystring-es3": "^0.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "string_decoder": "^1.3.0",
+    "tty-browserify": "^0.0.1",
+    "url": "^0.11.0",
+    "util": "^0.12.4"
+  },
+  "alias": {
+    "fs": false,
+    "os": false,
+    "path": false,
+    "util": false,
+    "process": {
+      "global": "{}"
+    }
   },
   "type": "module",
   "env": {
     "mode": "entry",
     "coreJs": 3
   },
-  "browserslist": "> 0.5%, last 2 versions, not dead"
+  "browserslist": "> 0.25%, not dead"
 }

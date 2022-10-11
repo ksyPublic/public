@@ -1,0 +1,50 @@
+{
+  "name": "seo",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "sources": "seo.config.js",
+  "license": "ISC",
+  "targets": {
+    "desktop:css": {
+      "source": "src/desktop/scss/main.scss",
+      "distDir": "./production/desktop/css"
+    },
+    "desktop:js": {
+      "source": "src/desktop/js/seo.ui.js",
+      "distDir": "./production/desktop/js"
+    },
+    "desktop:all": {
+      "source": ["src/desktop/js/seo.ui.js"],
+      "distDir": "./production/desktop"
+    },
+    "mobile": {},
+    "admin": {}
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./build.js",
+    "dev": "cross-env BUILD_TYPE=desktop NODE_ENV=development parcel",
+    "serve": "cross-env BUILD_TYPE=desktop NODE_ENV=development parcel",
+    "build:p:css": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:css --no-source-maps --dist-dir output/desktop --no-optimize",
+    "build:p:js": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:js --no-source-maps --dist-dir output/desktop",
+    "build:m:css": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target css --no-source-maps --dist-dir output/mobile",
+    "build:m:js": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target js --no-source-maps --dist-dir output/mobile",
+    "build:p": "cross-env BUILD_TYPE=desktop NODE_ENV=production parcel build --target desktop:all --no-source-maps --dist-dir output/desktop --no-optimize",
+    "build:m": "cross-env BUILD_TYPE=mobile NODE_ENV=production parcel build --target all --no-source-maps --dist-dir output/mobile",
+    "build": "cross-env BUILD_TYPE=all NODE_ENV=production parcel build 'src/dektop/html/*.html' --no-source-maps --dist-dir output"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.7.0",
+    "chalk": "^5.0.1",
+    "cli-select": "^1.1.2",
+    "cross-env": "^7.0.3",
+    "parcel": "^2.7.0"
+  },
+  "type": "module",
+  "env": {
+    "mode": "entry",
+    "coreJs": 3
+  },
+  "browserslist": "> 0.25%, not dead"
+}
