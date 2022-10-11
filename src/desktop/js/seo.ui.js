@@ -3,7 +3,7 @@ import Tab from './components/tab';
 import Accordion from './components/accordion';
 
 document.addEventListener('DOMContentLoaded', function () {
-  Initilize.initilize();
+  // Initilize.initilize();
 });
 
 const ui = {

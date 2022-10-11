@@ -14,11 +14,13 @@
       "source": "src/desktop/js/seo.ui.js",
       "distDir": "./production/desktop/js"
     },
-    "desktop:all": {
-      "source": [
-        "src/desktop/html/**/*.html"
-      ],
-      "distDir": "./production/desktop"
+    "desktop:html": {
+      "source": "src/desktop/html",
+      "distDir": "./production/desktop/html"
+    },
+    "desktop:guide": {
+      "source": "src/desktop/guide",
+      "distDir": "./production/desktop/guide"
     },
     "mobile:css": {
       "source": "src/mobile/scss/main.scss",
@@ -27,36 +29,35 @@
     "mobile:js": {
       "source": "src/mobile/js/seo.ui.js",
       "distDir": "./production/mobile/js"
-    },
-    "mobile:all": {
-      "source": "src/mobile",
-      "distDir": "./production/mobile"
-    },
-    "admin": {}
+    }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./build.js",
-    "dev:p": "rm -rf .parcel-cache/* dist/* && parcel src/desktop/html/**/*.html --open",
-    "dev:m": "rm -rf .parcel-cache/* dist/* && parcel src/mobile/html/**/*.html --open",
-    "dev:a": "rm -rf .parcel-cache/* dist/* && parcel src/admin/html/**/*.html --open",
+    "dev:p": "rm -rf .parcel-cache/* dist/* && parcel src/desktop/html/**/*.html -p 5500 --open",
+    "dev:m": "rm -rf .parcel-cache/* dist/* && parcel src/mobile/html/**/*.html -p 5500 --open",
+    "dev:a": "rm -rf .parcel-cache/* dist/* && parcel src/admin/html/**/*.html -p 5500 --open",
+    "build:p": "rm -rf production/* && parcel build --target desktop:css --target desktop:js --no-source-maps --dist-dir output/desktop ",
     "build:p:css": "parcel build --target desktop:css --no-source-maps --dist-dir output/desktop --no-optimize",
     "build:p:js": "parcel build --target desktop:js --no-source-maps --dist-dir output/desktop",
+    "build:m": "parcel build --target mobile:all --no-source-maps --dist-dir output/mobile",
     "build:m:css": "parcel build --target mobile:css --no-source-maps --dist-dir output/mobile",
     "build:m:js": "parcel build --target mobile:js --no-source-maps --dist-dir output/mobile",
-    "build:p": "parcel build --target desktop:all --no-source-maps --dist-dir output/desktop --no-optimize",
-    "build:m": "parcel build --target mobile:all --no-source-maps --dist-dir output/mobile",
     "build": "parcel build --no-source-maps --dist-dir output"
   },
   "devDependencies": {
     "@parcel/resolver-glob": "^2.7.0",
     "@parcel/transformer-sass": "^2.7.0",
+    "autoprefixer": "^10.4.12",
     "chalk": "^5.0.1",
     "cli-select": "^1.1.2",
+    "core-js": "^3.25.5",
     "cross-env": "^7.0.3",
     "parcel": "^2.7.0",
+    "postcss": "^8.4.17",
     "posthtml-doctype": "^1.1.1",
-    "posthtml-include": "^1.7.4"
+    "posthtml-include": "^1.7.4",
+    "posthtml-modules": "^0.9.0"
   },
   "type": "module",
   "env": {
